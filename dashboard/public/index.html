@@ -16,8 +16,39 @@
     <div class="glow glow-2"></div>
     <div class="glow glow-3"></div>
   </div>
+  <!-- ========================================== -->
+  <!-- FORM LOGIN ADMIN -->
+  <!-- ========================================== -->
+  <div id="loginContainer" class="login-overlay" style="display: none;">
+    <div class="login-card">
+      <div class="login-content">
+        <div class="login-header">
+          <div class="login-logo">👨‍💻</div>
+          <h2 class="login-title">Admin Access</h2>
+          <p class="login-subtitle">Sistem Informasi Akademik Prodi SI</p>
+        </div>
+        
+        <div class="login-input-group">
+          <label>Username</label>
+          <input type="text" id="loginUsername" class="login-input" placeholder="Masukkan username admin">
+        </div>
+        
+        <div class="login-input-group">
+          <label>Password</label>
+          <div style="position: relative;">
+            <input type="password" id="loginPassword" class="login-input" placeholder="••••••••" style="padding-right: 45px;">
+            <span id="togglePassword" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); cursor: pointer; opacity: 0.5; font-size: 1.2rem; transition: opacity 0.3s; user-select: none;" title="Tampilkan Password">👁️</span>
+          </div>
+        </div>
+        
+        <button id="loginBtn" class="login-btn">Masuk Dashboard</button>
+        <div id="loginMsg" class="form-message" style="display:none; margin-top: 15px; text-align: center;"></div>
+      </div>
+    </div>
+  </div>
 
-  <div class="app">
+  <!-- CONTAINER DASHBOARD UTAMA (Disembunyikan jika belum login) -->
+  <div id="dashboardApp" class="app" style="display: none; opacity: 0; transition: opacity 0.5s ease;">
     <!-- Header -->
     <header class="header glass">
       <div class="header-left">
@@ -40,6 +71,7 @@
           <span id="statusText">Offline</span>
         </div>
         <span id="serverTime" class="server-time"></span>
+        <button id="logoutBtn" class="btn-sm btn-outline" style="margin-left: 15px; border-color: rgba(239,68,68,0.5); color: #ef4444;">🚪 Logout</button>
       </div>
     </header>
 

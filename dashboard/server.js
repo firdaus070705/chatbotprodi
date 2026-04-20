@@ -25,6 +25,54 @@ class DashboardServer {
     this.app.use(express.json());
     this.app.use(express.static(path.join(__dirname, 'public')));
 
+    // =========================================================================
+    // 👇👇👇 [SKRIPSI] KODE UNTUK AUTENTIKASI ADMIN DASHBOARD 👇👇👇
+    // =========================================================================
+    // Setup Token Store untuk Login di memori server
+    this.validTokens = new Set();
+    const crypto = require('crypto');
+
+    // API: Login Endpoint
+    this.app.post('/api/login', (req, res) => {
+      const { username, password } = req.body;
+      const adminConfig = this.config.admin || { username: 'admin', password: 'password123' };
+      
+      if (username === adminConfig.username && password === adminConfig.password) {
+        const token = crypto.randomBytes(32).toString('hex');
+        this.validTokens.add(token);
+        return res.json({ success: true, token: token });
+      }
+      return res.status(401).json({ success: false, message: 'Username atau Password salah!' });
+    });
+
+    // API: Logout Endpoint
+    this.app.post('/api/logout', (req, res) => {
+      const authHeader = req.headers.authorization;
+      if (authHeader && authHeader.startsWith('Bearer ')) {
+        const token = authHeader.split(' ')[1];
+        this.validTokens.delete(token);
+      }
+      res.json({ success: true, message: 'Logout berhasil' });
+    });
+
+    // Middleware Autentikasi API
+    this.app.use('/api', (req, res, next) => {
+      // Pengecualian: Jalur login dan logout boleh diakses tanpa token
+      if (req.path === '/login' || req.path === '/logout') return next();
+
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ error: 'Unauthorized: Harap login terlebih dahulu!' });
+      }
+
+      const token = authHeader.split(' ')[1];
+      if (!this.validTokens.has(token)) {
+        return res.status(401).json({ error: 'Unauthorized: Sesi kadaluarsa. Silakan login kembali.' });
+      }
+
+      next();
+    });
+
     // Setup Multer untuk upload Kalender Akademik
     const storage = multer.diskStorage({
       destination: (req, file, cb) => {

@@ -2,6 +2,12 @@
  * Konfigurasi Chatbot WhatsApp Berbasis NLP
  */
 module.exports = {
+  // Admin Login Dashboard
+  admin: {
+    username: 'admin',
+    password: 'password123'
+  },
+
   // Dashboard
   dashboard: {
     port: 3000,

@@ -16,6 +16,88 @@ const GRADIENTS = [
 
 const $ = id => document.getElementById(id);
 
+// --- Global Fetch Interceptor (Login Auth) ---
+const originalFetch = window.fetch;
+window.fetch = async function(resource, config) {
+  const token = localStorage.getItem('adminToken');
+  if (token) {
+    config = config || {};
+    config.headers = config.headers || {};
+    if (typeof resource === 'string' && resource.startsWith('/api/')) {
+        config.headers['Authorization'] = 'Bearer ' + token;
+    }
+  }
+  const response = await originalFetch(resource, config);
+  
+  if (response.status === 401 && resource !== '/api/login') {
+    logout(); // Sesi kadaluarsa
+  }
+  return response;
+};
+
+// --- AUTHENTICATION LOGIC ---
+function checkAuth() {
+  const token = localStorage.getItem('adminToken');
+  if (token) {
+    if($('loginContainer')) $('loginContainer').style.display = 'none';
+    if($('dashboardApp')) {
+      $('dashboardApp').style.display = 'block';
+      setTimeout(() => { $('dashboardApp').style.opacity = '1'; }, 50);
+    }
+    startDashboard();
+  } else {
+    if($('loginContainer')) $('loginContainer').style.display = 'flex';
+    if($('dashboardApp')) {
+      $('dashboardApp').style.display = 'none';
+      $('dashboardApp').style.opacity = '0';
+    }
+    stopDashboard();
+  }
+}
+
+async function doLogin() {
+  const user = $('loginUsername').value;
+  const pass = $('loginPassword').value;
+  const btn = $('loginBtn');
+  const msg = $('loginMsg');
+  
+  btn.textContent = 'Memvalidasi...';
+  btn.disabled = true;
+  
+  try {
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: user, password: pass })
+    });
+    const d = await res.json();
+    
+    if (d.success) {
+      localStorage.setItem('adminToken', d.token);
+      msg.style.display = 'none';
+      checkAuth();
+    } else {
+      msg.className = 'form-message error';
+      msg.textContent = d.message || 'Login gagal';
+      msg.style.display = 'block';
+    }
+  } catch (e) {
+    msg.className = 'form-message error';
+    msg.textContent = 'Koneksi ke server gagal.';
+    msg.style.display = 'block';
+  }
+  btn.textContent = 'Masuk';
+  btn.disabled = false;
+}
+
+function logout() {
+  fetch('/api/logout', { method: 'POST' }).catch(e=>{});
+  localStorage.removeItem('adminToken');
+  if($('loginUsername')) $('loginUsername').value = '';
+  if($('loginPassword')) $('loginPassword').value = '';
+  checkAuth();
+}
+
 function fmtUptime(s) {
   if (!s || s <= 0) return '0 detik';
   if (s < 60) return s + ' detik';
@@ -506,10 +588,45 @@ $('uploadKalenderBtn').addEventListener('click', async () => {
 
 // ========== INIT ==========
 function refresh() { updateQR(); updateStatus(); updateStats(); updateLogs(); }
-refresh();
-updateDB();
-updateUsers();
-loadIntents();
-setInterval(refresh, REFRESH);
-setInterval(updateDB, 15000);
-setInterval(updateUsers, 10000);
+
+let intervals = [];
+
+function startDashboard() {
+  stopDashboard(); // cegah duplikasi
+  refresh();
+  updateDB();
+  updateUsers();
+  loadIntents();
+  intervals.push(setInterval(refresh, REFRESH));
+  intervals.push(setInterval(updateDB, 15000));
+  intervals.push(setInterval(updateUsers, 10000));
+}
+
+function stopDashboard() {
+  intervals.forEach(clearInterval);
+  intervals = [];
+}
+
+// Event bindings when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  const lBtn = $('loginBtn');
+  const lPass = $('loginPassword');
+  const outBtn = $('logoutBtn');
+  const toggleBtn = $('togglePassword');
+  
+  if(lBtn) lBtn.addEventListener('click', doLogin);
+  if(lPass) lPass.addEventListener('keypress', e => { if (e.key === 'Enter') doLogin(); });
+  if(outBtn) outBtn.addEventListener('click', logout);
+  
+  if(toggleBtn && lPass) {
+    toggleBtn.addEventListener('click', () => {
+      const type = lPass.getAttribute('type') === 'password' ? 'text' : 'password';
+      lPass.setAttribute('type', type);
+      toggleBtn.textContent = type === 'password' ? '👁️' : '🙈';
+      toggleBtn.title = type === 'password' ? 'Tampilkan Password' : 'Sembunyikan Password';
+      toggleBtn.style.opacity = type === 'password' ? '0.5' : '1';
+    });
+  }
+  
+  checkAuth();
+});

@@ -188,7 +188,7 @@
         "gimana cara pakenya"
       ],
       "responses": [
-        "Saya bisa membantu kamu dengan informasi berikut:\n\nInformasi Prodi Sistem Informasi:\n- Profil, Visi dan Misi Prodi\n- Fasilitas Prodi\n- Struktur Organisasi\n- Daftar Dosen SI\n- Kurikulum\n\nInformasi Keuangan dan Beasiswa:\n- Rincian Biaya SPP\n- Info Beasiswa\n\nProsedur Akademik:\n- Syarat dan Prosedur KKD\n- Syarat dan Prosedur OJT\n- Kalender Akademik\n- Prosedur Semester Pendek\n- Prosedur Yudisium dan Wisuda\n- Prosedur Ujian Proposal\n- Prosedur Ujian Hasil dan Tutup\n\nSilakan ketik pertanyaan kamu!"
+        "Saya bisa membantu kamu dengan informasi berikut:\n\nInformasi Prodi Sistem Informasi:\n- Profil, Visi dan Misi Prodi\n- Fasilitas Prodi\n- Struktur Organisasi\n- Daftar Dosen SI\n- Kurikulum\n- Prestasi Mahasiswa\n\nInformasi Keuangan dan Beasiswa:\n- Rincian Biaya SPP\n- Info Beasiswa\n\nProsedur Akademik:\n- Syarat dan Prosedur KKD\n- Syarat dan Prosedur OJT\n- Kalender Akademik\n- Prosedur Semester Pendek\n- Prosedur Yudisium dan Wisuda\n- Prosedur Ujian Proposal\n- Prosedur Ujian Hasil dan Tutup\n\nSilakan ketik pertanyaan kamu!"
       ]
     },
     {
@@ -323,7 +323,7 @@
         "nomor dosen"
       ],
       "responses": [
-        "IR. HILMANSYAH GANI,M.KOM\nWAHYUDIN HASYIM,M.KOM\nALTER LASARUDIN,M.KOM\nFRANGKY TUPAMAHU,M.T\nMOHAMMAD KHAIRUL FATHAN HABIE,M.KOM"
+        "IR. HILMANSYAH GANI,M.KOM\nWAHYUDIN HASYIM,M.KOM\nALTER LASARUDIN,M.KOM\nFRANGKY TUPAMAHU,M.T\nMOHAMMAD KHAIRUL FATHAN HABIE,M.KOM\n\nJika ingin mengetahui mengenai dosen ini maka langsung menghadap ke ruang kaprodi informatika dan ruangan dosen informatika.\n\nApakah Anda ingin tahu letak ruangannya di mana? (Ketik: \"dimana letaknya\")"
       ]
     },
     {
@@ -614,7 +614,6 @@
         "kelulusan",
         "cara daftar wisuda",
         "berkas wisuda",
-        "lulus",
         "kapan lulus",
         "syarat lulus",
         "ijazah",
@@ -787,7 +786,7 @@
         "nanya"
       ],
       "responses": [
-        "Info tentang apa nih? Berikut topik yang bisa saya bantu:\n\nAkademik:\n- Profil dan Visi Misi Prodi\n- Kurikulum dan Mata Kuliah\n- Kalender Akademik\n- Daftar Dosen\n\nKeuangan dan Beasiswa:\n- Rincian Biaya SPP\n- Info Beasiswa\n\nProsedur:\n- KKD dan OJT\n- Semester Pendek\n- Ujian Proposal\n- Ujian Hasil dan Tutup\n- Yudisium dan Wisuda\n\nSilakan ketik topik yang ingin kamu ketahui.",
+        "Info tentang apa nih? Berikut topik yang bisa saya bantu:\n\nAkademik:\n- Profil dan Visi Misi Prodi\n- Kurikulum dan Mata Kuliah\n- Kalender Akademik\n- Daftar Dosen\n- Prestasi Mahasiswa\n\nKeuangan dan Beasiswa:\n- Rincian Biaya SPP\n- Info Beasiswa\n\nProsedur:\n- KKD dan OJT\n- Semester Pendek\n- Ujian Proposal\n- Ujian Hasil dan Tutup\n- Yudisium dan Wisuda\n\nSilakan ketik topik yang ingin kamu ketahui.",
         "Informasi tentang apa ya? Coba sebutkan topiknya, misalnya:\n- \"info wisuda\"\n- \"info spp\"\n- \"info beasiswa\"\n- \"info ojt\"\n- \"info kurikulum\"\n\nAtau ketik \"help\" untuk melihat semua topik yang tersedia.",
         "Boleh, mau tanya tentang apa? Saya bisa bantu informasi seputar:\n- Prodi Sistem Informasi\n- Biaya SPP/UKT\n- Beasiswa\n- KKD, OJT, Semester Pendek\n- Wisuda dan Yudisium\n- Ujian Proposal/Hasil/Tutup\n\nSilakan ketik pertanyaan kamu."
       ]
@@ -795,6 +794,7 @@
     {
       "tag": "tanya_profil_lulusan",
       "patterns": [
+        "lulusan",
         "profil lulusan",
         "lulusan si jadi apa",
         "prospek kerja",
@@ -836,6 +836,43 @@
       ],
       "responses": [
         "Syarat yang kamu maksud untuk kegiatan apa? Misalnya:\n1. Syarat KKD\n2. Syarat OJT\nSilakan bertanya lebih spesifik ya!"
+      ]
+    },
+    {
+      "tag": "tanya_prestasi_mahasiswa",
+      "patterns": [
+        "prestasi",
+        "prestasi mahasiswa",
+        "info prestasi",
+        "prestasi kampus",
+        "prestasi prodi",
+        "kejuaraan",
+        "lomba",
+        "mahasiswa mapres",
+        "mahasiswa berprestasi",
+        "penghargaan",
+        "juara"
+      ],
+      "responses": [
+        "Mahasiswa Program Studi Sistem Informasi selalu aktif mengukir prestasi! Terdapat berbagai pencapaian membanggakan baik di tingkat regional maupun nasional dalam kompetisi akademik (IT/Software Development, PKM, dll) maupun non-akademik (Olahraga, Kesenian). Untuk rincian daftar mahasiswa dan prestasinya, silakan kunjungi website resmi prodi atau mading fakultas ya!"
+      ]
+    },
+    {
+      "tag": "tanya_lokasi_ruangan_dosen",
+      "patterns": [
+        "dimana letaknya",
+        "di mana letaknya",
+        "dimana ruangannya",
+        "ruangannya di mana",
+        "dimana kaprodi",
+        "kasih tau lokasinya",
+        "dimana ruangan dosen",
+        "dimana letak ruang kaprodi",
+        "alamat ruangan dosen",
+        "lokasi ruangan"
+      ],
+      "responses": [
+        "Lokasi ruangan Kaprodi dan Dosen Informatika berada di **Gedung Fakultas Sains dan Ilmu Komputer**.\n\n🚶‍♂️ **Petunjuk jalan:**\nDari pintu masuk utama, jalan lurus lalu belok kanan. Di sebelah kanan Anda akan ada dua ruangan yang berdampingan: ruangan pertama adalah Ruangan Kaprodi, dan ruangan setelahnya adalah Ruangan Dosen.\n\n💡 **Tips tambahan:**\nJika Anda kebingungan, Anda bisa menanyakan letak \"Ruangan BAAKSI lama\" kepada mahasiswa senior di sana. Ruangan Kaprodi dan Ruangan Dosen letaknya berada tepat di depan ruangan BAAKSI lama tersebut!"
       ]
     }
   ]
