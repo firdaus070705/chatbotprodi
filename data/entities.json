@@ -1,0 +1,134 @@
+{
+  "jurusan": [
+    {
+      "name": "Teknik Informatika",
+      "value": "teknik_informatika",
+      "keywords": ["teknik informatika", "ti", "informatika", "ilmu komputer"]
+    },
+    {
+      "name": "Sistem Informasi",
+      "value": "sistem_informasi",
+      "keywords": ["sistem informasi", "si"]
+    },
+    {
+      "name": "Manajemen",
+      "value": "manajemen",
+      "keywords": ["manajemen", "manajemen bisnis"]
+    },
+    {
+      "name": "Akuntansi",
+      "value": "akuntansi",
+      "keywords": ["akuntansi", "accounting"]
+    }
+  ],
+  "semester": [
+    {
+      "name": "Semester 1",
+      "value": "semester_1",
+      "keywords": ["semester 1", "semester satu", "sem 1"]
+    },
+    {
+      "name": "Semester 2",
+      "value": "semester_2",
+      "keywords": ["semester 2", "semester dua", "sem 2"]
+    },
+    {
+      "name": "Semester 3",
+      "value": "semester_3",
+      "keywords": ["semester 3", "semester tiga", "sem 3"]
+    },
+    {
+      "name": "Semester 4",
+      "value": "semester_4",
+      "keywords": ["semester 4", "semester empat", "sem 4"]
+    },
+    {
+      "name": "Semester 5",
+      "value": "semester_5",
+      "keywords": ["semester 5", "semester lima", "sem 5"]
+    },
+    {
+      "name": "Semester 6",
+      "value": "semester_6",
+      "keywords": ["semester 6", "semester enam", "sem 6"]
+    },
+    {
+      "name": "Semester 7",
+      "value": "semester_7",
+      "keywords": ["semester 7", "semester tujuh", "sem 7"]
+    },
+    {
+      "name": "Semester 8",
+      "value": "semester_8",
+      "keywords": ["semester 8", "semester delapan", "sem 8"]
+    }
+  ],
+  "jenis_ujian": [
+    {
+      "name": "UTS",
+      "value": "uts",
+      "keywords": ["uts", "ujian tengah semester", "mid"]
+    },
+    {
+      "name": "UAS",
+      "value": "uas",
+      "keywords": ["uas", "ujian akhir semester", "final"]
+    },
+    {
+      "name": "Kuis",
+      "value": "kuis",
+      "keywords": ["kuis", "quiz"]
+    }
+  ],
+  "jenis_beasiswa": [
+    {
+      "name": "KIP-Kuliah",
+      "value": "kip_kuliah",
+      "keywords": ["kip", "kip kuliah", "bidikmisi"]
+    },
+    {
+      "name": "Beasiswa Prestasi",
+      "value": "beasiswa_prestasi",
+      "keywords": ["beasiswa prestasi", "prestasi akademik"]
+    },
+    {
+      "name": "Beasiswa Tidak Mampu",
+      "value": "beasiswa_tidak_mampu",
+      "keywords": ["beasiswa tidak mampu", "bantuan biaya", "bbp"]
+    }
+  ],
+  "pembayaran": [
+    {
+      "name": "Transfer Bank",
+      "value": "bank_transfer",
+      "keywords": ["transfer", "bank", "bca", "bni", "bri", "mandiri", "bsi"]
+    },
+    {
+      "name": "Virtual Account",
+      "value": "virtual_account",
+      "keywords": ["virtual account", "va", "kode bayar"]
+    }
+  ],
+  "layanan_akademik": [
+    {
+      "name": "Sekretariat Prodi",
+      "value": "sekretariat",
+      "keywords": ["sekretariat", "tata usaha", "tu", "admin prodi"]
+    },
+    {
+      "name": "Bagian Keuangan",
+      "value": "keuangan",
+      "keywords": ["keuangan", "bagian keuangan", "bayar", "pembayaran"]
+    },
+    {
+      "name": "Bagian Kemahasiswaan",
+      "value": "kemahasiswaan",
+      "keywords": ["kemahasiswaan", "bagian kemahasiswaan", "organisasi"]
+    },
+    {
+      "name": "Perpustakaan",
+      "value": "perpustakaan",
+      "keywords": ["perpustakaan", "perpus", "buku"]
+    }
+  ]
+}

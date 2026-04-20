@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dashboard Monitoring Layanan Informasi Akademik Program Studi Sistem Informasi">
+  <title>Layanan Informasi Akademik - Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-effects">
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+  </div>
+
+  <div class="app">
+    <!-- Header -->
+    <header class="header glass">
+      <div class="header-left">
+        <div class="logo">
+          <span class="logo-icon">🤖</span>
+          <div class="logo-pulse"></div>
+        </div>
+        <div>
+          <h1>Layanan Informasi Akademik <span class="gradient-text">Program Studi Sistem Informasi</span></h1>
+          <p class="subtitle">Dashboard Monitoring Chatbot • MySQL Database</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div id="dbBadge" class="badge badge-db">
+          <span class="badge-dot"></span>
+          <span>MySQL</span>
+        </div>
+        <div id="statusBadge" class="badge badge-status offline">
+          <span class="badge-dot"></span>
+          <span id="statusText">Offline</span>
+        </div>
+        <span id="serverTime" class="server-time"></span>
+      </div>
+    </header>
+
+    <!-- QR Code Section -->
+    <section id="qrSection" class="qr-section" style="display:none;">
+      <div class="qr-card glass">
+        <div class="qr-glow"></div>
+        <h2 class="qr-title">📲 Hubungkan WhatsApp</h2>
+        <p class="qr-subtitle" id="qrMessage">Menunggu QR code...</p>
+        <div id="qrContainer" class="qr-container">
+          <div class="qr-loading">
+            <div class="spinner"></div>
+            <p>Memuat QR Code...</p>
+          </div>
+        </div>
+        <div class="qr-steps">
+          <div class="qr-step"><span class="step-num">1</span> Buka WhatsApp di HP</div>
+          <div class="qr-step"><span class="step-num">2</span> Tap Linked Devices</div>
+          <div class="qr-step"><span class="step-num">3</span> Scan QR di atas</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Cards -->
+    <section class="stats-grid">
+      <div class="stat-card glass" style="--accent: #3898ec">
+        <div class="stat-icon"><span>📩</span></div>
+        <div class="stat-info">
+          <span class="stat-value" id="totalMessages">0</span>
+          <span class="stat-label">Pesan Masuk</span>
+        </div>
+        <div class="stat-glow"></div>
+      </div>
+      <div class="stat-card glass" style="--accent: #0ea5e9">
+        <div class="stat-icon"><span>💬</span></div>
+        <div class="stat-info">
+          <span class="stat-value" id="totalResponses">0</span>
+          <span class="stat-label">Respons Terkirim</span>
+        </div>
+        <div class="stat-glow"></div>
+      </div>
+      <div class="stat-card glass" style="--accent: #2563eb">
+        <div class="stat-icon"><span>🎯</span></div>
+        <div class="stat-info">
+          <span class="stat-value" id="avgConfidence">0%</span>
+          <span class="stat-label">Kepercayaan Rata-rata</span>
+        </div>
+        <div class="stat-glow"></div>
+      </div>
+      <div class="stat-card glass" style="--accent: #0284c7">
+        <div class="stat-icon"><span>⏱️</span></div>
+        <div class="stat-info">
+          <span class="stat-value" id="uptime">0 detik</span>
+          <span class="stat-label">Waktu Aktif</span>
+        </div>
+        <div class="stat-glow"></div>
+      </div>
+    </section>
+
+    <!-- Main Grid -->
+    <div class="main-grid">
+      <!-- Col 1: Intent + NLP Test -->
+      <div class="col">
+        <div class="card glass">
+          <div class="card-header">
+            <h2 class="card-title">📊 Distribusi Intent</h2>
+          </div>
+          <div id="intentChart" class="intent-chart">
+            <p class="empty-state">Menunggu data percakapan...</p>
+          </div>
+        </div>
+        <div class="card glass">
+          <div class="card-header">
+            <h2 class="card-title">🧪 Uji NLP Engine</h2>
+          </div>
+          <div class="test-form">
+            <input type="text" id="testInput" placeholder="Ketik pesan untuk diuji..." class="test-input">
+            <button id="testBtn" class="btn-primary">Analisis</button>
+          </div>
+          <div id="testResult" class="test-result" style="display:none;"></div>
+        </div>
+      </div>
+
+      <!-- Col 2: Conversations -->
+      <div class="col">
+        <div class="card glass full-height">
+          <div class="card-header">
+            <h2 class="card-title">💬 Log Percakapan</h2>
+            <span id="logSource" class="source-badge"></span>
+          </div>
+          <div id="logsList" class="logs-list">
+            <p class="empty-state">Menunggu percakapan masuk...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Users Section -->
+    <section class="card glass users-section">
+      <div class="card-header">
+        <h2 class="card-title">👥 Pengguna Chatbot</h2>
+        <span id="userCount" class="user-count">0 pengguna</span>
+      </div>
+      <div id="usersTable" class="users-table-container">
+        <p class="empty-state">Belum ada pengguna yang menggunakan chatbot...</p>
+      </div>
+    </section>
+
+    <!-- Database Management Section -->
+    <section class="card glass db-management">
+      <div class="card-header">
+        <h2 class="card-title">🗄️ Kelola Database Intent</h2>
+        <div style="display:flex;gap:8px">
+          <span id="intentCount" class="source-badge">0 intent</span>
+          <button id="reloadNLP" class="btn-sm btn-green">🔄 Reload NLP</button>
+        </div>
+      </div>
+      
+      <!-- Kalender Akademik Upload -->
+      <div class="add-intent-card" style="margin-bottom: 20px; background: rgba(56, 152, 236, 0.05); border: 1px solid rgba(56, 152, 236, 0.2);">
+        <h3 class="section-subtitle">📅 Ganti Gambar Kalender Akademik</h3>
+        <p style="font-size: 0.9em; opacity: 0.8; margin-bottom: 15px;">Unggah gambar baru untuk menggantikan gambar kalender akademik saat ini yang akan dikirim saat pengguna mengetik "kalender".</p>
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <input type="file" id="kalenderFileInput" accept="image/*" class="form-input" style="padding: 8px;">
+          <button id="uploadKalenderBtn" class="btn-primary">📤 Unggah Kalender</button>
+        </div>
+        <div id="uploadKalenderMsg" class="form-message" style="display:none; margin-top: 10px;"></div>
+      </div>
+
+      <!-- Add New Intent Form -->
+      <div class="add-intent-card">
+        <h3 class="section-subtitle">➕ Tambah Intent Baru</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Nama Intent (Tag)</label>
+            <input type="text" id="newTag" class="form-input" placeholder="contoh: tanya_jadwal">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pola Kalimat (satu per baris)</label>
+            <textarea id="newPatterns" class="form-textarea" rows="4" placeholder="jadwal hari ini&#10;kapan jadwalnya&#10;schedule hari ini"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Respons Bot (satu per baris)</label>
+            <textarea id="newResponses" class="form-textarea" rows="4" placeholder="Jadwal hari ini adalah...&#10;Berikut jadwalnya:"></textarea>
+          </div>
+        </div>
+        <button id="addIntentBtn" class="btn-primary" style="margin-top:16px">💾 Simpan Intent</button>
+        <div id="addIntentMsg" class="form-message" style="display:none"></div>
+      </div>
+
+      <!-- Existing Intents List -->
+      <h3 class="section-subtitle" style="margin-top:28px">📋 Daftar Intent</h3>
+      <div id="intentsList" class="intents-list">
+        <p class="empty-state">Memuat data intent...</p>
+      </div>
+    </section>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal" style="display:none">
+      <div class="modal-overlay" onclick="closeEditModal()"></div>
+      <div class="modal-content glass">
+        <div class="modal-header">
+          <h2 class="card-title">✏️ Edit Intent: <span id="editTag" class="gradient-text"></span></h2>
+          <button class="btn-close" onclick="closeEditModal()">✕</button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Pola Kalimat (satu per baris)</label>
+          <textarea id="editPatterns" class="form-textarea" rows="6"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Respons Bot (satu per baris)</label>
+          <textarea id="editResponses" class="form-textarea" rows="6"></textarea>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:16px">
+          <button id="saveEditBtn" class="btn-primary">💾 Simpan Perubahan</button>
+          <button class="btn-sm btn-outline" onclick="closeEditModal()">Batal</button>
+        </div>
+        <div id="editMsg" class="form-message" style="display:none"></div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Layanan Informasi Akademik • Program Studi Sistem Informasi • MySQL Database</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
