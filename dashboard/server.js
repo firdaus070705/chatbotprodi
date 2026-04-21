@@ -144,6 +144,44 @@ class DashboardServer {
     });
 
     // =========================================================================
+    // 👇👇👇 [SKRIPSI] API INTEGRASI WORDPRESS (PUSH NOTIFIKASI) 👇👇👇
+    // =========================================================================
+    // API: Mengirim pesan dari aplikasi eksternal (Contoh: Notifikasi WordPress)
+    this.app.post('/api/send-message', async (req, res) => {
+      try {
+        const { number, message, apiKey } = req.body;
+        
+        // Mengamankan API agar tidak disalahgunakan orang luar
+        const SECRET_WP_KEY = 'KUNCI-RAHASIA-SKRIPSI-123'; 
+
+        if (apiKey !== SECRET_WP_KEY) {
+           return res.status(401).json({ error: 'Unauthorized: API Key salah atau tidak ada' });
+        }
+        if (!number || !message) {
+           return res.status(400).json({ error: 'Parameter "number" dan "message" wajib diisi' });
+        }
+        
+        // Parsing nomor HP: ubah 08xxx menjadi format WhatsApp 628xxx@c.us
+        let formattedNumber = number.replace(/\D/g, ''); // Hapus karakter non-angka
+        if (formattedNumber.startsWith('0')) {
+            formattedNumber = '62' + formattedNumber.slice(1);
+        }
+        formattedNumber = formattedNumber + '@c.us';
+
+        if (this.waClient && this.waClient.isReady) {
+          // Kirim pesan lewat engine whatsapp-web.js
+          await this.waClient.client.sendMessage(formattedNumber, message);
+          res.json({ success: true, message: 'Berhasil: Pesan terkirim dari sistem WordPress!' });
+        } else {
+          res.status(503).json({ error: 'Gagal: Chatbot sedang offline/belum scan QR' });
+        }
+      } catch (err) {
+        console.error('❌ POST /api/send-message error:', err.message);
+        res.status(500).json({ error: 'Gagal mengirim pesan: ' + err.message });
+      }
+    });
+
+    // =========================================================================
     // 👇👇👇 [SKRIPSI] BAGIAN INI ADALAH KODE UNTUK MENGIRIM STATUS APLIKASI KE WEB 👇👇👇
     // =========================================================================
     // API: Status
